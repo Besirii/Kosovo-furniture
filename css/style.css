@@ -411,12 +411,20 @@ h2 {
 
 /* ---------- linket sociale te fundi ---------- */
 
-.foot-socials { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.foot-socials { display: flex; flex-wrap: wrap; gap: 10px; }
 .foot-social {
-  font-size: 14px; color: var(--ink-soft); text-decoration: none;
-  border-bottom: 1px solid var(--line); padding-bottom: 1px;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink-soft); text-decoration: none;
+  transition: color .15s, border-color .15s, background-color .15s;
 }
-.foot-social:hover { color: var(--ink); border-bottom-color: var(--brass); }
+/* Çdo rrjet merr ngjyrën e vet vetëm kur preket — në qetësi mbeten neutrale,
+   që rreshti të mos dukej si një tabelë reklamash. */
+.foot-social:nth-child(1):hover { color: #fff; background: var(--wa); border-color: var(--wa); }
+.foot-social:nth-child(2):hover { color: #fff; background: #C13584; border-color: #C13584; }
+.foot-social:nth-child(3):hover { color: #fff; background: #1877F2; border-color: #1877F2; }
+.foot-social:nth-child(4):hover { color: #fff; background: #111; border-color: #111; }
 
 /* Tre butona porosie nuk hyjnë në dy kolona — jepi secilit rreshtin e vet
    kur janë tre, dhe dy kolona kur janë dy. */
@@ -425,3 +433,24 @@ h2 {
   .sheet-actions[data-count="3"] { grid-template-columns: repeat(3, 1fr); }
 }
 .sheet-actions[data-count="1"] { grid-template-columns: 1fr; }
+
+
+/* ---------- ikonat te kartelat e kontaktit ---------- */
+
+.contact-head { display: flex; align-items: center; gap: 8px; }
+.contact-head svg { flex: none; color: var(--brass-lt); }
+.contact-card.is-wa .contact-head svg { color: var(--wa); }
+.contact-card.is-ig:hover { border-color: #C13584; }
+.contact-card.is-fb:hover { border-color: #1877F2; }
+.contact-card.is-tt:hover { border-color: #EE1D52; }
+
+/* Ikonat brenda butonave të produktit marrin ngjyrën e markës. */
+.btn-line.is-ig svg { color: #C13584; }
+.btn-line.is-fb svg { color: #1877F2; }
+.btn-line.is-tt svg { color: var(--ink); }
+.btn-line:hover svg { color: inherit; }
+.btn svg { flex: none; }
+
+/* Të gjithë butonat e porosisë me lartësi të njëjtë, edhe kur njëri
+   e thyen tekstin në dy rreshta. */
+.sheet-actions { grid-auto-rows: 1fr; }

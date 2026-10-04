@@ -30,26 +30,30 @@ Formati: prefiks ndërkombëtar, **pa `+`, pa hapësira, pa `0` në fillim**.
 Nëse numri kthehet te vlera shembull `38344000000`, butonat e WhatsApp-it
 fshihen vetvetiu — më mirë asnjë buton sesa një që çon askund.
 
-### b) Instagrami dhe Facebook
+### b) Instagrami, Facebook dhe TikTok
 
-Te `js/config.js`, **vetëm emrat** — pa `@`, pa link:
+Ikonat janë të ndërtuara dhe presin vetëm emrat. Te `js/config.js`,
+**vetëm emrin** — pa `@`, pa link:
 
 ```js
 instagram: "kosovocraft",      // -> instagram.com/kosovocraft
 facebook:  "KosovoCraftKS",    // -> facebook.com/KosovoCraftKS
-tiktok:    "",                 // bosh = nuk shfaqet
+tiktok:    "kosovocraft",      // -> tiktok.com/@kosovocraft
 ```
+
+Sapo ta plotësosh njërin, ikona e tij shfaqet në tri vende njëherësh:
+te butonat e secilit produkt, te kartelat e «Na shkruani», dhe te
+rreshti rrethor në fund të faqes. Nuk ka asgjë tjetër për të ndryshuar.
+
+Çdo rrjet i lënë bosh (`""`) nuk shfaqet askund — asnjë ikonë e vdekur.
 
 Te Facebook duhet **username-i i faqes**, jo emri i shfaqur. E gjen te
 faqja → Settings → Page setup → Username. Nëse faqja nuk ka username,
 cakto një — pa të, linku nuk punon.
 
-Çdo rrjet që lihet bosh (`""`) nuk shfaqet fare: as si buton te produkti,
-as si kartelë te kontakti, as te fundi i faqes.
-
-Linket çojnë **drejt te faqja/profili**. Nëse një ditë do që Instagrami ta
-hapë bisedën menjëherë në vend të profilit, ndërro vetëm funksionin
-`igLink()` te `js/app.js` në `https://ig.me/m/<emri>`.
+Linket çojnë **drejt te faqja ose profili**. Nëse një ditë do që
+Instagrami ta hapë bisedën menjëherë, ndërro vetëm funksionin `igLink()`
+te `js/app.js` në `https://ig.me/m/<emri>`.
 
 ### c) Kontrollo produktet
 
@@ -67,7 +71,7 @@ Kontrolloji një nga një me punishten. Një material i shkruar gabim te një ga
 |---|---|
 | Butoni WhatsApp (kokë, hero, rrethi pezull) | Bisedë me mesazhin «Dëshiroj të di më shumë për produktet tuaja» |
 | «Porosit në WhatsApp» te produkti | Bisedë me emrin e produktit **dhe linkun e tij** tashmë të shkruar |
-| Butonat Instagram / Facebook te produkti | Faqja ose profili |
+| Butonat Instagram / Facebook / TikTok te produkti | Faqja ose profili |
 | Kartelat te «Na shkruani» | WhatsApp, telefon, dhe rrjetet që i ke plotësuar |
 | Rreshti te fundi i faqes | Të gjitha rrjetet, si link i thjeshtë |
 
