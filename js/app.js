@@ -47,8 +47,52 @@
     return "https://wa.me/" + n + "?text=" + encodeURIComponent(message);
   }
 
+  /**
+   * Rrjetet sociale çojnë DREJT te faqja/profili.
+   * (Ekziston edhe varianti ig.me/m/<emri> që hap bisedën menjëherë —
+   *  nëse një ditë e do atë sjellje, ndërro vetëm këto dy funksione.)
+   */
   function igLink() {
-    return CFG.instagram ? "https://instagram.com/" + CFG.instagram : "";
+    return CFG.instagram
+      ? "https://instagram.com/" + String(CFG.instagram).replace(/^@/, "")
+      : "";
+  }
+
+  function igProfile() { return igLink(); }
+
+  /** Faqja e Facebook-ut. Përdor USERNAME-in, jo emrin e shfaqur. */
+  function fbLink() {
+    return CFG.facebook
+      ? "https://facebook.com/" + String(CFG.facebook).replace(/^@/, "")
+      : "";
+  }
+
+  function tiktokLink() {
+    return CFG.tiktok ? "https://tiktok.com/@" + String(CFG.tiktok).replace(/^@/, "") : "";
+  }
+
+  /**
+   * Në telefon linket e bisedës hapen në të njëjtën skedë.
+   * Arsyeja: shfletuesi brenda Instagramit dhe Facebook-ut shpesh e bllokon
+   * target="_blank", dhe klienti mbetet duke parë një faqe bosh. Në desktop
+   * e mbajmë skedën e re, që katalogu të mos humbasë.
+   */
+  function isHandheld() {
+    return window.matchMedia && window.matchMedia("(max-width: 899px)").matches;
+  }
+
+  function openInNewTab(anchor) {
+    if (isHandheld()) {
+      anchor.removeAttribute("target");
+    } else {
+      anchor.target = "_blank";
+    }
+    anchor.rel = "noopener";
+    return anchor;
+  }
+
+  function productUrl(product) {
+    return location.origin + location.pathname + "#produkti/" + product.id;
   }
 
   function productMessage(product) {
@@ -56,7 +100,7 @@
     // dhe na thotë saktësisht për cilin produkt bëhet fjalë.
     return (
       t("waProduct") + " " + pick(product.name) +
-      "\n(" + location.origin + location.pathname + "#produkti/" + product.id + ")\n\n" +
+      "\n(" + productUrl(product) + ")\n\n" +
       t("waProductTail")
     );
   }
@@ -87,6 +131,7 @@
     renderCountries();
     renderContact();
     renderGeneralWa();
+    renderFooterSocial();
 
     // Nëse një produkt është i hapur, rifreskoje në gjuhën e re.
     var open = document.getElementById("sheet");
@@ -229,19 +274,23 @@
     if (hasWhatsApp()) {
       var wa = el("a", "btn btn-wa btn-lg");
       wa.href = waLink(productMessage(product));
-      wa.target = "_blank";
-      wa.rel = "noopener";
       wa.appendChild(el("span", null, t("orderWhatsapp")));
-      actions.appendChild(wa);
+      actions.appendChild(openInNewTab(wa));
     }
 
     if (igLink()) {
       var ig = el("a", "btn btn-line btn-lg", t("orderInstagram"));
       ig.href = igLink();
-      ig.target = "_blank";
-      ig.rel = "noopener";
-      actions.appendChild(ig);
+      actions.appendChild(openInNewTab(ig));
     }
+
+    if (fbLink()) {
+      var fb = el("a", "btn btn-line btn-lg", t("orderFacebook"));
+      fb.href = fbLink();
+      actions.appendChild(openInNewTab(fb));
+    }
+
+    actions.setAttribute("data-count", String(actions.children.length));
 
     info.appendChild(actions);
     body.appendChild(info);
@@ -284,7 +333,7 @@
     function add(cls, label, href, external) {
       var a = el("a", "contact-card " + cls);
       a.href = href;
-      if (external) { a.target = "_blank"; a.rel = "noopener"; }
+      if (external) openInNewTab(a);
       a.appendChild(el("span", "contact-kind", label));
       return box.appendChild(a), a;
     }
@@ -295,15 +344,15 @@
     }
     if (CFG.instagram) {
       var ig = add("is-ig", t("contactInstagram"), igLink(), true);
-      ig.appendChild(el("span", "contact-val", "@" + CFG.instagram));
+      ig.appendChild(el("span", "contact-val", "@" + String(CFG.instagram).replace(/^@/, "")));
     }
     if (CFG.facebook) {
-      var fb = add("is-fb", t("contactFacebook"), "https://facebook.com/" + CFG.facebook, true);
+      var fb = add("is-fb", t("contactFacebook"), fbLink(), true);
       fb.appendChild(el("span", "contact-val", CFG.facebook));
     }
     if (CFG.tiktok) {
-      var tk = add("is-tt", t("contactTiktok"), "https://tiktok.com/@" + CFG.tiktok, true);
-      tk.appendChild(el("span", "contact-val", "@" + CFG.tiktok));
+      var tk = add("is-tt", t("contactTiktok"), tiktokLink(), true);
+      tk.appendChild(el("span", "contact-val", "@" + String(CFG.tiktok).replace(/^@/, "")));
     }
     if (CFG.email) {
       var em = add("is-mail", t("contactEmail"), "mailto:" + CFG.email, false);
@@ -319,11 +368,32 @@
   }
 
   function renderGeneralWa() {
-    var href = hasWhatsApp() ? waLink(t("waGeneral")) : "#kontakti";
+    var ok = hasWhatsApp();
     document.querySelectorAll("[data-wa-general]").forEach(function (a) {
-      a.href = href;
-      if (hasWhatsApp()) { a.target = "_blank"; a.rel = "noopener"; }
-      else { a.removeAttribute("target"); }
+      a.href = ok ? waLink(t("waGeneral")) : "#kontakti";
+      if (ok) { openInNewTab(a); }
+      else { a.removeAttribute("target"); a.removeAttribute("rel"); }
+    });
+  }
+
+  /** Ikonat sociale te fundi i faqes — të dukshme pa pasur nevojë të kërkohen. */
+  function renderFooterSocial() {
+    var box = document.getElementById("footSocial");
+    if (!box) return;
+    box.innerHTML = "";
+
+    var links = [
+      ["WhatsApp", hasWhatsApp() ? waLink(t("waGeneral")) : ""],
+      ["Instagram", igProfile()],
+      ["Facebook", fbLink()],
+      ["TikTok", tiktokLink()],
+    ];
+
+    links.forEach(function (pair) {
+      if (!pair[1]) return;
+      var a = el("a", "foot-social", pair[0]);
+      a.href = pair[1];
+      box.appendChild(openInNewTab(a));
     });
   }
 

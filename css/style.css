@@ -408,3 +408,20 @@ h2 {
 }
 .fab:hover { background: #1FBE5A; }
 @media (min-width: 900px) { .fab { display: none; } }
+
+/* ---------- linket sociale te fundi ---------- */
+
+.foot-socials { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.foot-social {
+  font-size: 14px; color: var(--ink-soft); text-decoration: none;
+  border-bottom: 1px solid var(--line); padding-bottom: 1px;
+}
+.foot-social:hover { color: var(--ink); border-bottom-color: var(--brass); }
+
+/* Tre butona porosie nuk hyjnë në dy kolona — jepi secilit rreshtin e vet
+   kur janë tre, dhe dy kolona kur janë dy. */
+.sheet-actions[data-count="3"] { grid-template-columns: 1fr; }
+@media (min-width: 560px) {
+  .sheet-actions[data-count="3"] { grid-template-columns: repeat(3, 1fr); }
+}
+.sheet-actions[data-count="1"] { grid-template-columns: 1fr; }

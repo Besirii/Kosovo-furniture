@@ -34,7 +34,8 @@ window.I18N = {
     specsTitle: "Detajet",
     customNote: "Ky model bëhet edhe me masa dhe ngjyra të tjera. Na shkruani se çfarë ju duhet.",
     orderWhatsapp: "Porosit në WhatsApp",
-    orderInstagram: "Shkruaj në Instagram",
+    orderInstagram: "Instagram",
+    orderFacebook: "Facebook",
     close: "Mbyll",
     photoOf: "Foto",
 
@@ -100,7 +101,8 @@ window.I18N = {
     specsTitle: "Details",
     customNote: "Dieses Modell gibt es auch in anderen Maßen und Farben. Sagen Sie uns, was Sie brauchen.",
     orderWhatsapp: "Über WhatsApp bestellen",
-    orderInstagram: "Auf Instagram schreiben",
+    orderInstagram: "Instagram",
+    orderFacebook: "Facebook",
     close: "Schließen",
     photoOf: "Foto",
 
@@ -165,7 +167,8 @@ window.I18N = {
     specsTitle: "Details",
     customNote: "This model is also available in other sizes and colours. Tell us what you need.",
     orderWhatsapp: "Order on WhatsApp",
-    orderInstagram: "Message on Instagram",
+    orderInstagram: "Instagram",
+    orderFacebook: "Facebook",
     close: "Close",
     photoOf: "Photo",
 

@@ -11,29 +11,45 @@ dhe e ndryshon me çdo editor.
 
 ## 1. Para se të dalë online — tri gjëra
 
-### a) Numri i WhatsApp-it
+### a) Numri i WhatsApp-it — i vendosur
 
-Hap **`js/config.js`** dhe ndrysho rreshtin:
+Te **`js/config.js`**:
 
 ```js
-whatsappNumber: "38344000000",
+whatsappNumber: "4915203988092",   // +49 152 03988092
 ```
 
-Me prefiks ndërkombëtar, **pa `+`, pa hapësira, pa `0` në fillim**:
+Formati: prefiks ndërkombëtar, **pa `+`, pa hapësira, pa `0` në fillim**.
 
-| Numri yt | Shkruaje kështu |
+| Numri | Shkruaje kështu |
 |---|---|
+| +49 152 03988092 | `"4915203988092"` ✓ i vendosur |
 | 044 123 456 (Kosovë) | `"38344123456"` |
-| +49 170 1234567 (Gjermani) | `"491701234567"` |
 | +41 79 123 45 67 (Zvicër) | `"41791234567"` |
 
-Derisa ky numër të mos ndryshohet, butonat e WhatsApp-it **nuk shfaqen fare** —
-me qëllim, që të mos i dërgosh klientët në një numër që nuk ekziston.
+Nëse numri kthehet te vlera shembull `38344000000`, butonat e WhatsApp-it
+fshihen vetvetiu — më mirë asnjë buton sesa një që çon askund.
 
-### b) Instagrami dhe kontakti
+### b) Instagrami dhe Facebook
 
-Në të njëjtin skedar: `instagram`, `facebook`, `tiktok`, `email`, `phoneDisplay`, `city`.
-Çdo rrjet që e lë bosh (`""`) thjesht nuk shfaqet.
+Te `js/config.js`, **vetëm emrat** — pa `@`, pa link:
+
+```js
+instagram: "kosovocraft",      // -> instagram.com/kosovocraft
+facebook:  "KosovoCraftKS",    // -> facebook.com/KosovoCraftKS
+tiktok:    "",                 // bosh = nuk shfaqet
+```
+
+Te Facebook duhet **username-i i faqes**, jo emri i shfaqur. E gjen te
+faqja → Settings → Page setup → Username. Nëse faqja nuk ka username,
+cakto një — pa të, linku nuk punon.
+
+Çdo rrjet që lihet bosh (`""`) nuk shfaqet fare: as si buton te produkti,
+as si kartelë te kontakti, as te fundi i faqes.
+
+Linket çojnë **drejt te faqja/profili**. Nëse një ditë do që Instagrami ta
+hapë bisedën menjëherë në vend të profilit, ndërro vetëm funksionin
+`igLink()` te `js/app.js` në `https://ig.me/m/<emri>`.
 
 ### c) Kontrollo produktet
 
@@ -44,6 +60,21 @@ Kontrolloji një nga një me punishten. Një material i shkruar gabim te një ga
 1.200 € është një ankesë, jo një shitje.
 
 ---
+
+### Si sillen linket
+
+| Ku | Çfarë hap |
+|---|---|
+| Butoni WhatsApp (kokë, hero, rrethi pezull) | Bisedë me mesazhin «Dëshiroj të di më shumë për produktet tuaja» |
+| «Porosit në WhatsApp» te produkti | Bisedë me emrin e produktit **dhe linkun e tij** tashmë të shkruar |
+| Butonat Instagram / Facebook te produkti | Faqja ose profili |
+| Kartelat te «Na shkruani» | WhatsApp, telefon, dhe rrjetet që i ke plotësuar |
+| Rreshti te fundi i faqes | Të gjitha rrjetet, si link i thjeshtë |
+
+Në telefon linket hapen **në të njëjtën skedë**. Arsyeja: shfletuesi brenda
+Instagramit dhe Facebook-ut shpesh e bllokon hapjen në skedë të re, dhe
+klienti mbetet duke parë një faqe bosh. Në desktop hapen në skedë të re,
+që katalogu të mos humbasë.
 
 ## 2. Si ta vësh online — falas
 
